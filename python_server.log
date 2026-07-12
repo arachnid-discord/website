@@ -1,0 +1,16 @@
+127.0.0.1 - - [12/Jul/2026 11:47:29] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:30] "GET /assets/images.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:31] "GET /assets/staff.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /dashboard.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/css/dashboard.css HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] code 404, message File not found
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/js/stocks.js HTTP/1.1" 404 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/js/moderation.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/js/verification.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/js/settings.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/js/dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] code 404, message File not found
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/js/lastfm.js HTTP/1.1" 404 -
+127.0.0.1 - - [12/Jul/2026 11:47:34] code 404, message File not found
+127.0.0.1 - - [12/Jul/2026 11:47:34] "GET /assets/js/vccall.js HTTP/1.1" 404 -
+127.0.0.1 - - [12/Jul/2026 11:47:36] "GET /verify.html?t=dummy_token HTTP/1.1" 200 -
