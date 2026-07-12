@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rift Dashboard</title>
+    <title>Arachnid Dashboard</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png">
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -17,8 +17,8 @@
             <!-- Mobile header inside sidebar -->
             <div class="sidebar-header">
                 <div class="logo">
-                    <img src="https://i.postimg.cc/D0DrrFt3/110c46fc7f5cf0c4e29f872107d7bf97.png" alt="Rift Logo" class="sidebar-logo-img">
-                    <span>RIFT</span>
+                    <img src="https://i.postimg.cc/D0DrrFt3/110c46fc7f5cf0c4e29f872107d7bf97.png" alt="Arachnid Logo" class="sidebar-logo-img">
+                    <span>ARACHNID</span>
                 </div>
                 <button class="sidebar-close" id="sidebarClose" onclick="closeSidebar()">
                     <i class="fa-solid fa-xmark"></i>
@@ -58,9 +58,9 @@
             </ul>
 
             <!-- Ko-fi tip button -->
-            <a href="https://ko-fi.com/fenruko" target="_blank" class="kofi-btn" title="Support Rift on Ko-fi">
+            <a href="https://ko-fi.com/fenruko" target="_blank" class="kofi-btn" title="Support Arachnid on Ko-fi">
                 <img src="https://storage.ko-fi.com/cdn/cup-border.png" class="kofi-icon" alt="Ko-fi">
-                <span>Support Rift</span>
+                <span>Support Arachnid</span>
             </a>
 
             <div class="sidebar-footer">
@@ -206,7 +206,7 @@
                                     <i class="fa-solid fa-headphones-simple"></i>
                                     <div class="vc-auto-prompt-text">
                                         <span id="vcAutoPromptMsg">You're in a voice channel!</span>
-                                        <span id="vcAutoPromptSub">Want Rift to use it?</span>
+                                        <span id="vcAutoPromptSub">Want Arachnid to use it?</span>
                                     </div>
                                     <button class="vc-auto-btn" id="vcAutoYes" onclick="acceptAutoVc()">
                                         <i class="fa-solid fa-check"></i> Use it
@@ -1229,5 +1229,22 @@
                 switchMusicPanel('player', document.querySelector('.mob-music-tab'));
             });
         }
+
+        async function loadBranding() {
+            try {
+                const res = await fetch('assets/images.json');
+                if (res.ok) {
+                    const images = await res.json();
+                    const faviconLink = document.querySelector('link[rel="icon"]');
+                    if (faviconLink && images.favicon) faviconLink.href = images.favicon;
+
+                    const sidebarLogo = document.querySelector('.sidebar-logo-img');
+                    if (sidebarLogo && images.logo) sidebarLogo.src = images.logo;
+                }
+            } catch (err) {
+                console.error('Error loading branding:', err);
+            }
+        }
+        loadBranding();
     </script>
 </html>

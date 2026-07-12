@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rift | Secure Verification</title>
+    <title>Arachnid | Secure Verification</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #7289da;
-            --primary-glow: rgba(114, 137, 218, 0.4);
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.4);
             --bg-dark: #0c0c0e;
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
@@ -29,8 +29,8 @@
         body {
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(114, 137, 218, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 210, 255, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 40%);
             color: var(--text-main);
             height: 100vh;
             display: flex;
@@ -110,7 +110,7 @@
         }
 
         .btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
             color: white;
             border: none;
             padding: 14px 28px;
@@ -126,7 +126,7 @@
         }
 
         .btn:hover {
-            background: #5b73c7;
+            background: linear-gradient(135deg, #6d28d9, #1d4ed8);
             transform: translateY(-2px);
             box-shadow: 0 10px 20px var(--primary-glow);
         }
@@ -203,9 +203,9 @@
                 ctx.fillStyle = "#f60";
                 ctx.fillRect(125,1,62,20);
                 ctx.fillStyle = "#069";
-                ctx.fillText("Rift-Security-Auth", 2, 15);
+                ctx.fillText("Arachnid-Security-Auth", 2, 15);
                 ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
-                ctx.fillText("Rift-Security-Auth", 4, 17);
+                ctx.fillText("Arachnid-Security-Auth", 4, 17);
                 data.canvas = canvas.toDataURL();
             } catch(e) {}
 
@@ -242,7 +242,7 @@
                 // UX delay
                 await new Promise(r => setTimeout(r, 1500));
 
-                const response = await fetch('https://api.rift.baby/api/verify', {
+                const response = await fetch('https://api.arachnid.baby/api/verify', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -290,7 +290,23 @@
             document.getElementById('status').innerHTML = '<button class="btn" onclick="location.reload()"><i class="fas fa-redo"></i> Try Again</button>';
         }
 
-        window.onload = startVerification;
+        async function loadBranding() {
+            try {
+                const res = await fetch('assets/images.json');
+                if (res.ok) {
+                    const images = await res.json();
+                    const faviconLink = document.querySelector('link[rel="icon"]');
+                    if (faviconLink && images.favicon) faviconLink.href = images.favicon;
+                }
+            } catch (err) {
+                console.error('Error loading branding:', err);
+            }
+        }
+
+        window.onload = () => {
+            loadBranding();
+            startVerification();
+        };
     </script>
 </body>
 </html>
