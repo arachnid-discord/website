@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — Arachnid</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --bg:      #2A2A34;
+  --section: #0a0a0a;
+  --wire:    rgba(255,255,255,0.07);
+  --wire2:   rgba(255,255,255,0.13);
+  --chalk:   #E3E3ED;
+  --border:  #333339;
+  --glass-from:   #232330;
+  --glass-to:     #17171f;
+  --glass-shadow: inset 0 1px 1px rgba(255,255,255,0.11),
+                  0 1px 4px rgba(0,0,0,0.55),
+                  inset 0 -1px 1px rgba(0,0,0,0.3);
+  --glass-border: rgba(255,255,255,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Geist',sans-serif;background:var(--bg);color:var(--chalk);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* GLASS BUTTON */
+.glass-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:9px 20px;border-radius:12px;font-family:'Geist',sans-serif;font-size:.84rem;font-weight:500;
+  color:rgba(227,227,237,.72);text-decoration:none;cursor:pointer;border:1px solid var(--glass-border);outline:none;
+  background:linear-gradient(135deg,var(--glass-from),var(--glass-to));box-shadow:var(--glass-shadow);
+  transition:color .25s,border-color .25s,transform .2s;overflow:hidden;letter-spacing:-.01em;}
+.glass-btn::before{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(to bottom,rgba(255,255,255,.038),transparent);opacity:0;transition:opacity .3s;z-index:0;pointer-events:none;}
+.glass-btn::after{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(to top,rgba(0,0,0,.32),transparent);z-index:-1;pointer-events:none;}
+.glass-btn>.bi,.glass-btn>svg{position:relative;z-index:1;}
+.glass-btn:hover{color:rgba(227,227,237,1);border-color:rgba(255,255,255,.11);}
+.glass-btn:hover::before{opacity:1;}
+.glass-btn-primary{background:rgba(227,227,237,.92);color:#13131a;font-weight:600;border-color:rgba(255,255,255,.2);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.52),0 1px 4px rgba(0,0,0,.55),inset 0 -1px 1px rgba(0,0,0,.1);}
+.glass-btn-primary::before{background:linear-gradient(to bottom,rgba(255,255,255,.24),transparent);}
+.glass-btn-primary::after{background:linear-gradient(to top,rgba(0,0,0,.06),transparent);}
+.glass-btn-primary:hover{background:rgba(233,233,241,1);color:#0a0a0f;border-color:rgba(255,255,255,.3);}
+.glass-btn-lg{padding:13px 28px;border-radius:13px;font-size:.9rem;}
+.bi{display:flex;align-items:center;gap:7px;position:relative;z-index:1;}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:14px 20px;transition:background .4s;}
+#nav.stuck{background:rgba(22,22,28,.95);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid var(--border);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
+.nav-logo img{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.12);}
+.nav-logo span{font-family:'Permanent Marker',cursive;font-size:1rem;color:#fff;letter-spacing:.07em;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{position:relative;padding:7px 14px;border-radius:10px;font-size:.8rem;font-weight:500;
+  color:rgba(227,227,237,.52);text-decoration:none;transition:color .2s;cursor:pointer;border:none;background:none;letter-spacing:-.005em;}
+.nav-link::before{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,var(--glass-from),var(--glass-to));box-shadow:var(--glass-shadow);
+  border:1px solid var(--glass-border);opacity:0;transition:opacity .25s;pointer-events:none;z-index:-1;}
+.nav-link:hover{color:rgba(227,227,237,1);}
+.nav-link:hover::before{opacity:1;}
+
+/* HERO */
+.hero{position:relative;min-height:64vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:140px 28px 72px;text-align:center;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 110% 80% at 50% 50%,transparent 20%,rgba(42,42,52,.5) 65%,rgba(42,42,52,.92) 100%);}
+.hero>*{position:relative;z-index:2;}
+.hero-scene{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none;}
+.hero-scene-grad{position:absolute;inset:0;
+  background:radial-gradient(ellipse 75% 55% at 12% 22%,rgba(88,55,150,.52),transparent 60%),
+    radial-gradient(ellipse 60% 48% at 88% 72%,rgba(35,75,130,.44),transparent 58%),
+    radial-gradient(ellipse 65% 42% at 50% 95%,rgba(65,35,105,.48),transparent 62%),
+    linear-gradient(160deg,#14102a 0%,#0d1520 40%,#130d22 70%,#0a0a14 100%);
+  filter:hue-rotate(22deg) contrast(118%) saturate(130%) brightness(.72);}
+.live-chip{display:inline-flex;align-items:center;gap:7px;font-size:.68rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(227,227,237,.58);background:linear-gradient(135deg,var(--glass-from),var(--glass-to));
+  box-shadow:var(--glass-shadow);border:1px solid var(--glass-border);border-radius:99px;padding:5px 14px;margin-bottom:28px;}
+.blinker{width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;animation:blink 2.2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.page-title{font-family:'Permanent Marker',cursive;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1;color:#fff;
+  letter-spacing:-.01em;margin-bottom:18px;text-shadow:0 2px 48px rgba(0,0,0,.6),0 0 80px rgba(100,70,180,.25);}
+.hero-sub{font-size:1.05rem;color:rgba(227,227,237,.68);max-width:480px;line-height:1.75;margin-bottom:8px;}
+
+/* SECTION WRAP */
+.dark-section{position:relative;background:var(--section);border-top:1px solid rgba(255,255,255,.04);
+  border-bottom:1px solid rgba(255,255,255,.04);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.04),0 1px 3px rgba(0,0,0,.4),inset 0 -1px 1px rgba(0,0,0,.2);}
+.wrap{max-width:1100px;margin:0 auto;padding:88px 28px;}
+.sec-head{margin-bottom:44px;}
+.kicker{font-size:.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(227,227,237,.52);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.kicker::before{content:'';width:18px;height:1px;background:rgba(227,227,237,.32);}
+.sec-title{font-family:'Instrument Serif',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;line-height:1.1;font-style:italic;}
+.sec-title em{font-style:normal;color:rgba(227,227,237,.4);}
+
+/* DIVISION BLOCKS */
+.division{margin-bottom:56px;}
+.division:last-child{margin-bottom:0;}
+.division-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.division-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 1px 3px rgba(0,0,0,.4);}
+.division-name{font-size:1.02rem;font-weight:700;color:#fff;letter-spacing:-.01em;}
+.division-count{font-size:.72rem;color:rgba(227,227,237,.4);font-weight:500;}
+
+.roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.role-card{position:relative;background:linear-gradient(145deg,#1a1a1f,#111115);border:1px solid rgba(255,255,255,.05);
+  border-radius:14px;padding:20px 22px;overflow:hidden;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.065),0 2px 10px rgba(0,0,0,.55),inset 0 -1px 1px rgba(0,0,0,.35);
+  transition:border-color .3s,transform .35s cubic-bezier(.23,1,.32,1);}
+.role-card::after{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(to top,rgba(0,0,0,.28),transparent 55%);z-index:0;pointer-events:none;}
+.role-card>*{position:relative;z-index:1;}
+.role-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);}
+.role-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.role-name{font-size:.92rem;font-weight:700;color:#fff;letter-spacing:-.01em;}
+.role-slots{font-size:.66rem;font-weight:600;letter-spacing:.03em;padding:3px 9px;border-radius:99px;
+  white-space:nowrap;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);}
+.slots-open{background:rgba(29,185,84,.1);color:#4ade80;border:1px solid rgba(29,185,84,.18);}
+.slots-filled{background:rgba(227,227,237,.06);color:rgba(227,227,237,.38);border:1px solid rgba(255,255,255,.06);}
+.role-desc{font-size:.78rem;color:rgba(227,227,237,.48);line-height:1.6;}
+
+.ib-r{background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.2);}
+.ib-b{background:rgba(76,201,240,.1);border:1px solid rgba(76,201,240,.2);}
+.ib-g{background:rgba(29,185,84,.1);border:1px solid rgba(29,185,84,.2);}
+.ib-p{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);}
+
+/* BENEFITS */
+.benefits-section{background:var(--bg);}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:12px;}
+.card{position:relative;background:linear-gradient(145deg,#1a1a1f,#111115);border:1px solid rgba(255,255,255,.05);
+  border-radius:16px;padding:26px;overflow:hidden;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.065),0 2px 10px rgba(0,0,0,.55),inset 0 -1px 1px rgba(0,0,0,.35);
+  transition:border-color .3s,transform .35s cubic-bezier(.23,1,.32,1);}
+.card::before{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(to bottom,rgba(255,255,255,.025),transparent 40%);opacity:0;transition:opacity .4s;pointer-events:none;z-index:0;}
+.card::after{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(to top,rgba(0,0,0,.28),transparent 50%);z-index:0;pointer-events:none;}
+.card>*{position:relative;z-index:1;}
+.card:hover{transform:translateY(-3px) scale(1.004);border-color:rgba(255,255,255,.1);}
+.card:hover::before{opacity:1;}
+.c1::after{background:radial-gradient(ellipse at 0% 0%,rgba(29,185,84,.09),transparent 55%),linear-gradient(to top,rgba(0,0,0,.28),transparent 50%);}
+.c2::after{background:radial-gradient(ellipse at 0% 0%,rgba(76,201,240,.09),transparent 55%),linear-gradient(to top,rgba(0,0,0,.28),transparent 50%);}
+.c3::after{background:radial-gradient(ellipse at 0% 0%,rgba(255,77,109,.09),transparent 55%),linear-gradient(to top,rgba(0,0,0,.28),transparent 50%);}
+.c4::after{background:radial-gradient(ellipse at 0% 0%,rgba(250,204,21,.09),transparent 55%),linear-gradient(to top,rgba(0,0,0,.28),transparent 50%);}
+.c5::after{background:radial-gradient(ellipse at 0% 0%,rgba(167,139,250,.09),transparent 55%),linear-gradient(to top,rgba(0,0,0,.28),transparent 50%);}
+.c6::after{background:radial-gradient(ellipse at 0% 0%,rgba(251,146,60,.09),transparent 55%),linear-gradient(to top,rgba(0,0,0,.28),transparent 50%);}
+.icon-box{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;flex-shrink:0;transition:transform .3s ease;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 1px 3px rgba(0,0,0,.4);}
+.card:hover .icon-box{transform:rotate(-6deg) scale(1.1);}
+.ib-y{background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.2);}
+.ib-o{background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2);}
+.card-title{font-size:.96rem;font-weight:700;color:#fff;margin-bottom:7px;letter-spacing:-.01em;}
+.card-desc{font-size:.81rem;color:rgba(227,227,237,.5);line-height:1.65;}
+
+.div-line{height:1px;background:linear-gradient(90deg,transparent,var(--wire2),transparent);}
+
+/* CTA */
+.cta-wrap{padding:0 28px 88px;}
+.cta-box{max-width:680px;margin:0 auto;background:linear-gradient(145deg,#1a1a1f,#111115);
+  border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:56px 44px;text-align:center;
+  position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.065),0 4px 40px rgba(0,0,0,.65),inset 0 -1px 1px rgba(0,0,0,.4);}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);}
+.cta-title{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(1.7rem,3.5vw,2.5rem);
+  color:#fff;line-height:1.15;margin-bottom:10px;}
+.cta-sub{font-size:.87rem;color:rgba(227,227,237,.52);margin-bottom:32px;}
+.cta-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+
+footer{border-top:1px solid var(--wire);padding:32px 28px 40px;background:var(--bg);}
+.foot-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;}
+.foot-links{display:flex;gap:5px;}
+.foot-links a{position:relative;padding:5px 12px;border-radius:8px;font-size:.78rem;font-weight:500;
+  color:rgba(227,227,237,.44);text-decoration:none;cursor:pointer;transition:color .2s;}
+.foot-links a::before{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,var(--glass-from),var(--glass-to));box-shadow:var(--glass-shadow);
+  border:1px solid var(--glass-border);opacity:0;transition:opacity .2s;pointer-events:none;z-index:-1;}
+.foot-links a:hover{color:rgba(227,227,237,1);}
+.foot-links a:hover::before{opacity:1;}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.23,1,.32,1),transform .7s cubic-bezier(.23,1,.32,1);}
+.rv.on{opacity:1;transform:none;}
+#stars-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.38;}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="Arachnid">
+      <span>ARACHNID</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features" class="nav-link"><span>Features</span></a>
+      <a href="https://docs.arachnid.baby" class="nav-link"><span>Docs</span></a>
+      <a href="/dashboard" class="nav-link"><span>Dashboard</span></a>
+      <a href="team.html" class="nav-link"><span>Careers</span></a>
+      <a href="https://discord.gg/fe46sJY8KF" class="glass-btn glass-btn-primary" style="border-radius:10px;padding:8px 16px;font-size:.8rem;">
+        <span class="bi">Apply Now</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-scene" aria-hidden="true"><div class="hero-scene-grad"></div></div>
+  <div class="live-chip rv"><span class="blinker"></span>We're hiring</div>
+  <div class="page-title rv" style="transition-delay:.06s">Join the Web</div>
+  <p class="hero-sub rv" style="transition-delay:.1s">
+    Arachnid is run by a small, dedicated team spread across moderation, support and development.
+    Here's where we currently need more hands.
+  </p>
+</section>
+
+<div class="div-line"></div>
+
+<!-- OPEN POSITIONS -->
+<section id="positions" class="dark-section">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker">Open positions</p>
+      <h2 class="sec-title">Find your division.<br><em>Pick your role.</em></h2>
+    </div>
+
+    <div class="division rv" style="transition-delay:0s">
+      <div class="division-head">
+        <div class="division-icon ib-p"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="#c4b5fd"/></svg></div>
+        <div><div class="division-name">Management Team</div><div class="division-count">Oversees all divisions</div></div>
+      </div>
+      <div class="roles">
+        <div class="role-card"><div class="role-top"><span class="role-name">Management Team</span><span class="role-slots slots-filled">Filled</span></div><div class="role-desc">Sets direction across moderation, support and development, and represents the project publicly.</div></div>
+      </div>
+    </div>
+
+    <div class="division rv" style="transition-delay:.05s">
+      <div class="division-head">
+        <div class="division-icon ib-r"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="1.8"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+        <div><div class="division-name">Moderation Division</div><div class="division-count">Keeps the server safe and on-topic</div></div>
+      </div>
+      <div class="roles">
+        <div class="role-card"><div class="role-top"><span class="role-name">Moderation Supervisor</span><span class="role-slots slots-filled">Filled</span></div><div class="role-desc">Oversees the moderation team and finalizes escalated cases.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Senior Moderator</span><span class="role-slots slots-open">Always open</span></div><div class="role-desc">Handles complex reports and mentors newer moderators.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Moderator</span><span class="role-slots slots-open">Always open</span></div><div class="role-desc">Enforces server rules, reviews reports, and issues warnings or bans.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Junior Moderator</span><span class="role-slots slots-open">Always open</span></div><div class="role-desc">Assists with day-to-day chat moderation under supervision.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Moderator Candidate</span><span class="role-slots slots-open">Always open</span></div><div class="role-desc">A trial role for prospective moderators to prove themselves before promotion.</div></div>
+      </div>
+    </div>
+
+    <div class="division rv" style="transition-delay:.1s">
+      <div class="division-head">
+        <div class="division-icon ib-b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V17a1 1 0 0 1-2 0v-.07A8 8 0 0 1 4 9a1 1 0 0 1 2 0 6 6 0 0 0 6 6 1 1 0 0 1 0 2zM12 7a1 1 0 0 1 0 2 3 3 0 0 0-3 3 1 1 0 0 1-2 0 5 5 0 0 1 5-5zm0-2a7 7 0 0 0-7 7 1 1 0 0 1-2 0 9 9 0 0 1 9-9 1 1 0 0 1 0 2z" fill="#4cc9f0"/></svg></div>
+        <div><div class="division-name">Support Division</div><div class="division-count">Helps users get the most out of Arachnid</div></div>
+      </div>
+      <div class="roles">
+        <div class="role-card"><div class="role-top"><span class="role-name">Support Supervisor</span><span class="role-slots slots-filled">Filled</span></div><div class="role-desc">Manages the support queue and keeps response quality consistent.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Senior Support Specialist</span><span class="role-slots slots-open">Always open</span></div><div class="role-desc">Resolves advanced tickets and trains newer support staff.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Support Specialist</span><span class="role-slots slots-open">Always open</span></div><div class="role-desc">Answers user questions and troubleshoots common setup issues.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Support Trainee</span><span class="role-slots slots-open">Always open</span></div><div class="role-desc">Learns the ropes of Arachnid's ticket system while shadowing experienced staff.</div></div>
+      </div>
+    </div>
+
+    <div class="division rv" style="transition-delay:.15s">
+      <div class="division-head">
+        <div class="division-icon ib-g"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="22" height="22" rx="2" stroke="#1db954" stroke-width="1.6" fill="none"/><line x1="2" y1="13" x2="14" y2="13" stroke="#1db954" stroke-width="1.4"/><line x1="14" y1="2" x2="14" y2="18" stroke="#1db954" stroke-width="1.4"/></svg></div>
+        <div><div class="division-name">Development Division</div><div class="division-count">Builds and maintains the bot</div></div>
+      </div>
+      <div class="roles">
+        <div class="role-card"><div class="role-top"><span class="role-name">Lead Developer</span><span class="role-slots slots-filled">Filled</span></div><div class="role-desc">Owns architecture decisions and reviews major changes to the codebase.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Senior Developer</span><span class="role-slots slots-open">Hiring</span></div><div class="role-desc">Ships new features and mentors newer contributors.</div></div>
+        <div class="role-card"><div class="role-top"><span class="role-name">Developer</span><span class="role-slots slots-open">Hiring</span></div><div class="role-desc">Builds commands, fixes bugs, and helps maintain Arachnid's growing codebase.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- BENEFITS -->
+<section class="benefits-section">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker">Why join us</p>
+      <h2 class="sec-title">Company benefits.<br><em>For a Discord team.</em></h2>
+    </div>
+    <div class="cards">
+      <div class="card c1 rv" style="transition-delay:0s">
+        <div class="icon-box ib-g"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.5 6.5H21l-5.5 4L17.5 19 12 15l-5.5 4L8 12.5 2.5 8.5H9L12 2z" fill="rgba(29,185,84,.2)" stroke="#1db954" stroke-width="1.4"/></svg></div>
+        <div class="card-title">Custom staff role</div>
+        <div class="card-desc">A dedicated colored role and title across the server, so your work is visible to the whole community.</div>
+      </div>
+      <div class="card c2 rv" style="transition-delay:.05s">
+        <div class="icon-box ib-b"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" stroke="#4cc9f0" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="8" r="4" stroke="#4cc9f0" stroke-width="1.6"/></svg></div>
+        <div class="card-title">Flexible hours</div>
+        <div class="card-desc">Volunteer on your own schedule — no fixed shifts, just clear expectations for your role.</div>
+      </div>
+      <div class="card c3 rv" style="transition-delay:.1s">
+        <div class="icon-box ib-r"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.35-9.5-9.13C.5 8.2 2.6 4.5 6.2 4.5c2 0 3.4 1.05 4.3 2.4.9-1.35 2.3-2.4 4.3-2.4 3.6 0 5.7 3.7 3.7 7.37C19 16.65 12 21 12 21z" fill="rgba(255,77,109,.18)" stroke="#ff4d6d" stroke-width="1.4"/></svg></div>
+        <div class="card-title">Real community impact</div>
+        <div class="card-desc">Your decisions directly shape a bot used by thousands of servers — no bureaucracy, no red tape.</div>
+      </div>
+      <div class="card c4 rv" style="transition-delay:.15s">
+        <div class="icon-box ib-y"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="rgba(250,204,21,.2)" stroke="#facc15" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+        <div class="card-title">Fast-track promotions</div>
+        <div class="card-desc">Clear ladders in every division — Candidate to Moderator, Trainee to Specialist, and beyond.</div>
+      </div>
+      <div class="card c5 rv" style="transition-delay:.2s">
+        <div class="icon-box ib-p"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#a78bfa" stroke-width="1.5"/><path d="M3 8h18" stroke="#a78bfa" stroke-width="1.3"/></svg></div>
+        <div class="card-title">Private staff server</div>
+        <div class="card-desc">Access to a staff-only space for coordination, announcements, and early feature previews.</div>
+      </div>
+      <div class="card c6 rv" style="transition-delay:.25s">
+        <div class="icon-box ib-o"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.9 4.6L19 8l-3.6 3.3.9 4.9L12 14l-4.3 2.2.9-4.9L5 8l5.1-.4z" fill="rgba(251,146,60,.2)" stroke="#fb923c" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+        <div class="card-title">Recognition that lasts</div>
+        <div class="card-desc">Staff credits on the site, shout-outs in patch notes, and a permanent spot in the team archive.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div-line"></div>
+
+<!-- CTA -->
+<section class="dark-section" style="padding-top:72px">
+  <div class="cta-wrap">
+    <div class="cta-box rv">
+      <p class="kicker" style="justify-content:center;margin-bottom:14px">Ready to help?</p>
+      <h2 class="cta-title">We'd love to have you.</h2>
+      <p class="cta-sub">Open an application in the support server and tell us which division fits you best.</p>
+      <div class="cta-btns">
+        <a href="https://discord.gg/2KUN2T2suz" class="glass-btn glass-btn-primary glass-btn-lg"><span class="bi">Apply on Discord</span></a>
+        <a href="index.html" class="glass-btn glass-btn-lg"><span class="bi">Back to home</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div style="display:flex;align-items:center;gap:9px">
+      <img src="logo.png" style="width:26px;height:26px;border-radius:50%;border:1px solid var(--wire)">
+      <span style="font-size:.9rem;color:rgba(227,227,237,.5);letter-spacing:.07em;font-family:'Permanent Marker',cursive">ARACHNID</span>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="https://discord.gg/2KUN2T2suz">Support</a>
+      <a href="https://docs.arachnid.lol">Docs</a>
+    </div>
+    <span id="year" style="font-size:.73rem;color:rgba(227,227,237,.18)"></span>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('stuck',scrollY>30));
+document.querySelectorAll('.rv').forEach(el=>{
+  if(el.getBoundingClientRect().top<innerHeight*.95){el.classList.add('on');return;}
+  ScrollTrigger.create({trigger:el,start:'top 90%',onEnter:()=>el.classList.add('on'),once:true});
+});
+document.getElementById('year').textContent='© '+new Date().getFullYear()+' Arachnid';
+
+(function(){
+  const sc=document.getElementById('stars-canvas');
+  const sctx=sc.getContext('2d');
+  let SW,SH,stars=[];
+  function rsz(){SW=sc.width=innerWidth;SH=sc.height=innerHeight;}
+  function mkStar(){return{x:Math.random()*SW,y:Math.random()*SH,r:Math.random()*1.1+.2,speed:Math.random()*.18+.04,opacity:Math.random()*.45+.08,ts:Math.random()*.008+.002,to:Math.random()*Math.PI*2};}
+  function initStars(){rsz();stars=Array.from({length:180},mkStar);}
+  let st=0;
+  function drawStars(){sctx.clearRect(0,0,SW,SH);st++;
+    for(const s of stars){s.y+=s.speed;if(s.y>SH+4){s.y=-4;s.x=Math.random()*SW;}
+      const tw=s.opacity*(0.6+0.4*Math.sin(st*s.ts+s.to));
+      sctx.beginPath();sctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      sctx.fillStyle=`rgba(255,255,255,${tw.toFixed(3)})`;sctx.fill();}
+    requestAnimationFrame(drawStars);}
+  window.addEventListener('resize',rsz);
+  initStars();drawStars();
+})();
+</script>
+</body>
+</html>
