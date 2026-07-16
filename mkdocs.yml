@@ -1,7 +1,7 @@
 site_name: Arachnid Docs
 site_description: The ultimate Discord Architect, Music, and Economy bot.
-site_author: fenruko
-site_url: https://arachanid.readthedocs.io/
+site_author: admin
+site_url: https://docs.arach.lol/
 
 theme:
   name: material

@@ -1,8 +1,8 @@
-// API is permanently at api.arachnid.baby via Cloudflare Worker — no Gist needed.
+// API is permanently at api.arach.lol via Cloudflare Worker — no Gist needed.
 const CLIENT_ID = "1329184069426348052";
-const API_BASE  = "https://api.arachnid.baby:24633/api";
-const WS_URL    = "wss://api.arachnid.baby:24633/ws";
-console.log('[Config] API_BASE=https://api.arachnid.baby/api (static)');
+const API_BASE  = "https://api.arach.lol:24633/api";
+const WS_URL    = "wss://api.arach.lol:24633/ws";
+console.log('[Config] API_BASE=https://api.arach.lol/api (static)');
 
 async function loadConfig() {
     // Nothing to load — URL is permanent
@@ -201,7 +201,7 @@ function showLoginWall() {
         wall.id = 'loginWall';
         wall.innerHTML = `
             <div class="login-wall-inner">
-                <img src="https://i.postimg.cc/D0DrrFt3/110c46fc7f5cf0c4e29f872107d7bf97.png" class="login-wall-logo">
+                <img src="assets/logo.png" class="login-wall-logo">
                 <h1 class="login-wall-title">ARACHNID</h1>
                 <p class="login-wall-sub">Sign in with Discord to access the dashboard</p>
                 <button class="login-wall-btn" onclick="login()">
